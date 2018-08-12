@@ -54,7 +54,14 @@ class ProjectController {
    * Update project details.
    * PUT or PATCH projects/:id
    */
-  async update ({ params, request, response }) {
+  async update ({ auth, params, request, response }) {
+    const user = await auth.getUser()
+    const { id } = params.id
+    const project = Project.find(id)
+    AuthService.verifyPermission(project, user)
+    project.merge(request)
+    await project.save()
+    return project
   }
 
   /**
