@@ -62,14 +62,29 @@ class TaskController {
    * Update task details.
    * PUT or PATCH tasks/:id
    */
-  async update ({ params, request, response }) {
+  async update ({ auth, params, request, response }) {
+    const user = await auth.getUser()
+    const { id } = params.id
+    const task = await Task.find(id)
+    const project = await task.project().fetch()
+    AuthService.verifyPermission(project, user)
+    task.merge(request)
+    await task.save()
+    return task
   }
 
   /**
    * Delete a task with id.
    * DELETE tasks/:id
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ auth, params, request, response }) {
+    const user = await auth.getUser()
+    const { id } = params.id
+    const task = await Task.find(id)
+    const project = await task.project().fetch()
+    AuthService.verifyPermission(project, user)
+    await task.delete()
+    return task
   }
 }
 

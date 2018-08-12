@@ -57,7 +57,7 @@ class ProjectController {
   async update ({ auth, params, request, response }) {
     const user = await auth.getUser()
     const { id } = params.id
-    const project = Project.find(id)
+    const project = await Project.find(id)
     AuthService.verifyPermission(project, user)
     project.merge(request)
     await project.save()
@@ -71,7 +71,7 @@ class ProjectController {
   async destroy ({ auth, params, request, response }) {
     const user = await auth.getUser()
     const { id } = params.id
-    const project = Project.find(id)
+    const project = await Project.find(id)
     AuthService.verifyPermission(project, user)
     await project.delete()
     return project
