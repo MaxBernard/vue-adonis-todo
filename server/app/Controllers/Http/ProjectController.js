@@ -1,6 +1,7 @@
 'use strict'
 
 const Project = use('App/Models/Project')
+const AuthService = use('App/Services/AuthService')
 
 /**
  * Resourceful controller for interacting with projects
@@ -23,10 +24,7 @@ class ProjectController {
     const user = await auth.getUser()
     const { title, description } = request.all()
     const project = new Project
-    project.fill({
-      title,
-      description
-    })
+    project.fill({ title, description })
     await user.projects().save(project)
     return project
   }
@@ -63,7 +61,13 @@ class ProjectController {
    * Delete a project with id.
    * DELETE projects/:id
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ auth, params, request, response }) {
+    const user = await auth.getUser()
+    const { id } = params.id
+    const project = Project.find(id)
+    AuthService.verifyPermission(project, user)
+    await project.delete()
+    return project
   }
 }
 
