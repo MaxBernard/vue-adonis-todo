@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-layout row wrap>
-      <v-flex xs6 offset-xs3>
-        <h1>Register</h1>
+      <v-flex xs4 offset-xs4>
+        Register
 
         <v-text-field
           label="Email"

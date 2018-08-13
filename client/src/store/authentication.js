@@ -4,11 +4,11 @@ import HTTP from '../http';
 export default {
   namespaced: true,
   state: {
-    registerEmail: 'hello YOOOO',
-    registerPassword: 'world',
+    registerEmail: 'john.doe@example.com',
+    registerPassword: '123456',
     registerError: null,
-    loginEmail: 'hello YOOOO',
-    loginPassword: 'world',
+    loginEmail: 'john.doe@example.com',
+    loginPassword: '123456',
     loginError: null,
     token: null,
   },
