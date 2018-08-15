@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <v-layout row wrap>
-      <v-flex xs6 offset-xs3>
+      <v-flex xs4 offset-xs4>
+        <v-form>
         <h1>Register</h1>
 
         <v-text-field
@@ -20,14 +21,15 @@
           @input="setRegisterPassword"
         ></v-text-field>
 
-        <v-alert type="error" :value="registerError">
-          {{registerError}}
-        </v-alert>
-
         <v-btn color="green" dark @click="register">
           <v-icon class="mr-2">account_circle</v-icon>
           Register
         </v-btn>
+
+        <v-alert type="error" :value="registerError">
+          {{registerError}}
+        </v-alert>
+        </v-form>
       </v-flex>
     </v-layout>
   </v-container>

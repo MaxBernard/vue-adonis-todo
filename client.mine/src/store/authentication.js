@@ -1,14 +1,15 @@
+import axios from 'axios';
 import router from '../router';
 import HTTP from '../http';
-
+/* eslint-disable */
 export default {
   namespaced: true,
   state: {
-    registerEmail: 'hello YOOOO',
-    registerPassword: 'world',
+    registerEmail: 'john.doe@example.com',
+    registerPassword: '123456',
     registerError: null,
-    loginEmail: 'hello YOOOO',
-    loginPassword: 'world',
+    loginEmail: 'john.doe@example.com',
+    loginPassword: '123456',
     loginError: null,
     token: null,
   },
@@ -19,16 +20,20 @@ export default {
     },
     register({ commit, state }) {
       commit('setRegisterError', null);
-      return HTTP().post('/auth/register', {
-        email: state.registerEmail,
-        password: state.registerPassword,
+      return axios.post('http://tower-2:3333/api/auth/register', {
+        email: 'john.doe@example.com',
+        password: '123456',
       })
+      // return axios.post('http://tower-2:3333/api/auth/register', {
+      //  email: state.registerEmail,
+      //  password: state.registerPassword,
+      // })
         .then(({ data }) => {
           commit('setToken', data.token);
           router.push('/');
         })
         .catch(() => {
-          commit('setRegisterError', 'An error has occured trying to create your account.');
+          commit('setRegisterError', 'Invalid registration info.');
         });
     },
     login({ commit, state }) {
@@ -42,7 +47,7 @@ export default {
           router.push('/');
         })
         .catch(() => {
-          commit('setLoginError', 'An error has occured trying to login.');
+          commit('setLoginError', 'Error: Unable to log you in');
         });
     },
   },

@@ -14,9 +14,11 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex';
-import Projects from '@/components/Projects.vue';
-import Tasks from '@/components/Tasks.vue';
+import Projects from '@/components/Projects';
+import Tasks from '@/components/Tasks';
 import router from '../router';
+
+/* eslint-disable */
 
 export default {
   components: {

@@ -29,8 +29,8 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
-import CreateRecord from '@/components/CreateRecord.vue';
-import EditableRecord from '@/components/EditableRecord.vue';
+import CreateRecord from '@/components/CreateRecord';
+import EditableRecord from '@/components/EditableRecord';
 
 export default {
   mounted() {
