@@ -2,8 +2,8 @@
   <Panel title="Projects">
     <div class="project mt-2" v-for="project in projects" :key="project.id">
       <EditableRecord
-        :isEditMode="project.isEditMode"
         :title="project.title"
+        :isEditMode="project.isEditMode"
         @onInput="setProjectTitle({ project, title: $event, })"
         @onClick="projectClicked(project)"
         @onEdit="setEditMode(project)"
@@ -13,8 +13,7 @@
     </div>
     <CreateRecord
       placeholder="My project name...."
-      @onInput="setNewProjectName"
-      :value="newProjectName"
+      @onInput="setNewProjectName" :value="newProjectName"
       @create="createProject"
     />
   </Panel>

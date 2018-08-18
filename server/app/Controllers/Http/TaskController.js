@@ -1,5 +1,6 @@
 'use strict'
 
+const chalk = require('chalk')
 const Project = use('App/Models/Project')
 const Task = use('App/Models/Task')
 const AuthService = use('App/Services/AuthService')
@@ -14,8 +15,8 @@ class TaskController {
    */
   async index ({ auth, request, params, response, view }) {
     const user = await auth.getUser()
-    const { id } = params.id
-    const project = await Project.find(id)
+    const id = params.id
+    const project = await Project.find( id )
     AuthService.verifyPermission(project, user)
     return await project.tasks().fetch()
   }
@@ -27,13 +28,14 @@ class TaskController {
   async create ({ auth, request, params, response, view }) {
     const user = await auth.getUser()
     const { title, description } = request.all()
-    const { id } = params.id
-    const project = await Project.find(id)
-    AuthService.verifyPermission(project, user)
+    const id = params.id
+    console.log(chalk.yellow('Task_Create: ', id, title, description))
+    const project = await Project.find( id )
+    AuthService.verifyPermission( project, user )
 
     const task = new Task
     task.fill({ title, description })
-    await project.tasks().save(task)
+    await project.tasks().save( task )
     return task
   }
 

@@ -6,9 +6,20 @@ export default {
   namespaced: true,
   state: {
     tasks: [],
-    newTaskName: null,
+    newTaskTitle: null,
+    newTaskDescr: null,
   },
   actions: {
+    createTask({ commit, state, rootState }) {
+      return HTTP().post(`/projects/${rootState.projects.currentProject.id}/tasks`, {
+        title: state.newTaskTitle,
+        description: state.newTaskTitle,
+      })
+        .then(({ data }) => {
+          commit('appendTask', data);
+          commit('setNewTaskTitle', null);
+        });
+    },
     saveTask({ commit }, task) {
       return HTTP().patch(`tasks/${task.id}`, task)
         .then(() => {
@@ -18,48 +29,41 @@ export default {
     deleteTask({ commit }, task) {
       return HTTP().delete(`tasks/${task.id}`)
         .then(() => {
-          commit('removeTask', task);
+          commit('removeTask', task)
         });
     },
     fetchTasksForProject({ commit }, project) {
+      const id = project.id
+      console.log('Project ID: ', id)
       return HTTP().get(`projects/${project.id}/tasks`)
         .then(({ data }) => {
-          commit('setTasks', data);
-        });
-    },
-    createTask({ commit, state, rootState }) {
-      return HTTP().post(`/projects/${rootState.projects.currentProject.id}/tasks`, {
-        description: state.newTaskName,
-      })
-        .then(({ data }) => {
-          commit('appendTask', data);
-          commit('setNewTaskName', null);
-        });
+          commit('setTasks', data)
+        })
     },
   },
   getters: {
   },
   mutations: {
     setTasks(state, tasks) {
-      state.tasks = tasks;
+      state.tasks = tasks
     },
-    setNewTaskName(state, newTaskName) {
-      state.newTaskName = newTaskName;
+    setNewTaskTitle(state, title) {
+      state.newTaskTitle = title
     },
     appendTask(state, task) {
       state.tasks.push(task);
     },
-    setTaskDescription(state, { task, description }) {
-      task.description = description;
+    setTaskTitle(state, { task, title }) {
+      task.title = title
     },
     setEditMode(state, task) {
-      Vue.set(task, 'isEditMode', true);
+      Vue.set(task, 'isEditMode', true)
     },
     unsetEditMode(state, task) {
-      Vue.set(task, 'isEditMode', false);
+      Vue.set(task, 'isEditMode', false)
     },
     removeTask(state, task) {
-      state.tasks.splice(state.tasks.indexOf(task), 1);
+      state.tasks.splice(state.tasks.indexOf(task), 1)
     },
     toggleCompleted(state, task) {
       task.completed = !task.completed;

@@ -8,6 +8,7 @@ export default {
     projects: [],
     currentProject: null,
     newProjectName: null,
+    newProjectDesc: null,
   },
   actions: {
     createProject({ commit, state }) {

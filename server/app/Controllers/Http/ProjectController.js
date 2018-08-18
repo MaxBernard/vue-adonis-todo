@@ -13,7 +13,7 @@ class ProjectController {
    * GET projects
    */
   async index ({ auth, request, response, view }) {
-    console.log(chalk.yellow('Projecs: Index'))
+    // console.log(chalk.yellow('Projecs: Index'))
     const user = await auth.getUser()
     return await user.projects().fetch()
   }
@@ -25,7 +25,7 @@ class ProjectController {
   async create ({ auth, request, response, view }) {
     const user = await auth.getUser()
     const { title, description } = request.all()
-    console.log(chalk.yellow('Projects_Create: ', title, description))
+    // console.log(chalk.yellow('Projects_Create: ', title, description))
     const project = new Project
     project.fill({ title, description })
     await user.projects().save( project )

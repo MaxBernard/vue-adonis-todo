@@ -1,17 +1,10 @@
 <template>
   <Panel title="Tasks">
-    <div
-      class="tasks mt-2"
-      v-for="task in tasks"
-      :key="task.id"
-    >
+    <div class="tasks mt-2" v-for="task in tasks" :key="task.id" >
       <EditableRecord
+        :title="task.title"
         :isEditMode="task.isEditMode"
-        :title="task.description"
-        @onInput="setTaskDescription({
-          task,
-          description: $event,
-        })"
+        @onInput="setTaskTitle({ task, title: $event, })"
         @onEdit="setEditMode(task)"
         @onSave="saveTask(task)"
         @onDelete="deleteTask(task)"
@@ -25,8 +18,7 @@
 
     <CreateRecord
       placeholder="I need to..."
-      @onInput="setNewTaskName"
-      :value="newTaskName"
+      @onInput="setNewTaskTitle" :value="NewTaskTitle"
       @create="createTask"
     />
   </Panel>
@@ -45,7 +37,7 @@ export default {
   computed: {
     ...mapState('tasks', [
       'tasks',
-      'newTaskName',
+      'newTaskTitle',
     ]),
   },
   methods: {
@@ -55,8 +47,8 @@ export default {
       'saveTask',
     ]),
     ...mapMutations('tasks', [
-      'setNewTaskName',
-      'setTaskDescription',
+      'setNewTaskTitle',
+      'setTaskTitle',
       'setEditMode',
       'toggleCompleted',
     ]),
