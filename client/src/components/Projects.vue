@@ -1,17 +1,10 @@
 <template>
   <Panel title="Projects">
-    <div
-      class="project mt-2"
-      v-for="project in projects"
-      :key="project.id"
-    >
+    <div class="project mt-2" v-for="project in projects" :key="project.id">
       <EditableRecord
         :isEditMode="project.isEditMode"
         :title="project.title"
-        @onInput="setProjectTitle({
-          project,
-          title: $event,
-        })"
+        @onInput="setProjectTitle({ project, title: $event, })"
         @onClick="projectClicked(project)"
         @onEdit="setEditMode(project)"
         @onSave="saveProject(project)"

@@ -10,6 +10,16 @@ export default {
     newProjectName: null,
   },
   actions: {
+    createProject({ commit, state }) {
+      return HTTP().post('/projects', {
+        title: state.newProjectName,
+        description: state.newProjectName,
+      })
+        .then(({ data }) => {
+          commit('appendProject', data);
+          commit('setNewProjectName', null);
+        });
+    },
     saveProject({ commit }, project) {
       return HTTP().patch(`projects/${project.id}`, project)
         .then(() => {
@@ -26,15 +36,6 @@ export default {
       return HTTP().get('/projects')
         .then(({ data }) => {
           commit('setProjects', data);
-        });
-    },
-    createProject({ commit, state }) {
-      return HTTP().post('/projects', {
-        title: state.newProjectName,
-      })
-        .then(({ data }) => {
-          commit('appendProject', data);
-          commit('setNewProjectName', null);
         });
     },
   },

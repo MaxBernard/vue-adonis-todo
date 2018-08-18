@@ -1,11 +1,6 @@
 <template>
   <div class="white elevation-2">
-    <v-toolbar
-      flat
-      dense
-      dark
-      color="green"
-    >
+    <v-toolbar flat dense dark color="green">
       <v-toolbar-title>
         {{title}}
       </v-toolbar-title>

@@ -1,15 +1,16 @@
-const InvalidAccessException = use('App/Exceptions/InvalidAccessException')
-const InvalidResourceException = use('App/Exceptions/InvalidResourceException')
+const InvalidAccessException = use('App/Exceptions/InvalidAccessException');
+const ResourceNotExistException = use('App/Exceptions/InvalidResourceException');
 
 class AuthService {
   verifyPermission(resource, user) {
+    if (!resource) {
+      throw new InvalidResourceException();
+    }
+
     if (resource.user_id !== user.id) {
-      throw new InvalidAccessException
-    }  
-
-    if ( !resource ) {
-      throw new InvalidResourceException
-    }  
+      throw new InvalidAccessException();
+    }
   }
+}
 
-  module.exports = AuthService
+module.exports = new AuthService();
